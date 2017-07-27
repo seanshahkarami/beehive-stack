@@ -1,0 +1,22 @@
+version: "3.1"
+services:
+  ngnix:
+    image: seanshahkarami/beehive-nginx
+    ports:
+      - "8080:80"
+  rabbitmq:
+    image: seanshahkarami/beehive-rabbitmq
+    ports:
+      - "5671:5671"
+      - "15671:15671"
+    secrets:
+      - cacert
+      - rabbitmq_cert
+      - rabbitmq_key
+secrets:
+  cacert:
+    external: true
+  rabbitmq_cert:
+    external: true
+  rabbitmq_key:
+    external: true
