@@ -1,11 +1,11 @@
 version: "3.1"
 services:
   ngnix:
-    image: seanshahkarami/beehive-nginx
+    image: beehive-nginx
     ports:
       - "8080:80"
   rabbitmq:
-    image: seanshahkarami/beehive-rabbitmq
+    image: beehive-rabbitmq
     ports:
       - "5671:5671"
       - "15671:15671"
@@ -14,9 +14,9 @@ services:
       - rabbitmq_cert
       - rabbitmq_key
   cassandra:
-    image: seanshahkarami/beehive-cassandra
+    image: beehive-cassandra
   web:
-    image: seanshahkarami/beehive-web
+    image: beehive-web
     deploy:
       replicas: 3
 secrets:
