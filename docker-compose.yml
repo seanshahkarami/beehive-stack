@@ -13,6 +13,8 @@ services:
       - cacert
       - rabbitmq_cert
       - rabbitmq_key
+  cassandra:
+    image: seanshahkarami/beehive-cassandra
 secrets:
   cacert:
     external: true
