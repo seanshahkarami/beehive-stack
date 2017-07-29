@@ -1,17 +1,12 @@
 #!/bin/sh
 
-cd cassandra
-docker build -t beehive-cassandra .
-cd ..
+build_image() {
+  cd $1
+  docker build -t beehive-$1 .
+  cd ..
+}
 
-cd nginx
-docker build -t beehive-nginx .
-cd ..
-
-cd web
-docker build -t beehive-web .
-cd ..
-
-cd rabbitmq
-docker build -t beehive-rabbitmq .
-cd ..
+build_image cassandra
+build_image nginx
+build_image rabbitmq
+build_image web
