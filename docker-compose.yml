@@ -4,6 +4,8 @@ services:
     image: seanshahkarami/beehive-nginx
     ports:
       - "8080:80"
+    links:
+      - web
   rabbitmq:
     image: seanshahkarami/beehive-rabbitmq
     ports:
@@ -15,6 +17,8 @@ services:
       - rabbitmq_key
   cassandra:
     image: seanshahkarami/beehive-cassandra
+  web:
+    image: seanshahkarami/beehive-web
 secrets:
   cacert:
     external: true
