@@ -13,8 +13,12 @@ services:
       - cacert
       - rabbitmq_cert
       - rabbitmq_key
+  # in the future, can cluster using cassandra-1, cassandra-2, ...
+  # is there a good way to handle this with replicas?
   cassandra:
-    image: beehive-cassandra
+    image: cassandra
+    ports:
+      - "9042:9042"
   web:
     image: beehive-web
     deploy:
