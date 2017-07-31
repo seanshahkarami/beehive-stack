@@ -18,7 +18,7 @@ class SensorData(Model):
     data = columns.Blob()
 
 
-connection.setup(['127.0.0.1'], 'waggle')
+connection.setup(['cassandra'], 'waggle')
 create_keyspace_simple('waggle', replication_factor=3)
 sync_table(SensorData)
 
