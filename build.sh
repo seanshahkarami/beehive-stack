@@ -6,6 +6,5 @@ build_image() {
   cd ..
 }
 
-build_image nginx
-build_image rabbitmq
 build_image web
+build_image loader

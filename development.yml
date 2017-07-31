@@ -50,3 +50,11 @@ secrets:
     external: true
   rabbitmq_key:
     external: true
+  nginx_cert:
+    external: true
+  nginx_key:
+    external: true
+  loader_cert:
+    external: true
+  loader_key:
+    external: true
