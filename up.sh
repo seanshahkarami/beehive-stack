@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker stack up -c docker-compose.yml beehive
+docker stack up -c development.yml beehive
