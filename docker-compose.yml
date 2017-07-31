@@ -1,14 +1,17 @@
-version: "3.1"
+version: "3.2"
 services:
   ngnix:
     image: beehive-nginx
     ports:
       - "8080:80"
   rabbitmq:
-    image: beehive-rabbitmq
+    image: rabbitmq
     ports:
+      - "5672"
       - "5671:5671"
       - "15671:15671"
+    volumes:
+      - ./rabbitmq-config:/etc/rabbitmq
     secrets:
       - cacert
       - rabbitmq_cert
