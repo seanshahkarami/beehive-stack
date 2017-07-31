@@ -5,7 +5,7 @@ services:
     ports:
       - "8080:80"
     configs:
-      - source: nginx.conf
+      - source: nginx_config
         target: /etc/nginx/nginx.conf
   rabbitmq:
     image: rabbitmq
@@ -13,8 +13,13 @@ services:
       - "5672"
       - "5671:5671"
       - "15671:15671"
-    volumes:
-      - ./rabbitmq-config:/etc/rabbitmq
+    configs:
+      - source: rabbitmq_config
+        target: /etc/rabbitmq/rabbitmq.config
+      - source: rabbitmq_enabled_plugins
+        target: /etc/rabbitmq/enabled_plugins
+      - source: rabbitmq_definitions
+        target: /etc/rabbitmq/definitions.json
     secrets:
       - cacert
       - rabbitmq_cert
@@ -30,8 +35,15 @@ services:
     deploy:
       replicas: 3
 configs:
-  nginx.conf:
-    file: ./nginx.conf
+  nginx_config:
+    file: ./configs/nginx/nginx.conf
+
+  rabbitmq_config:
+    file: ./configs/rabbitmq/rabbitmq.config
+  rabbitmq_definitions:
+    file: ./configs/rabbitmq/definitions.json
+  rabbitmq_enabled_plugins:
+    file: ./configs/rabbitmq/enabled_plugins
 secrets:
   cacert:
     external: true
