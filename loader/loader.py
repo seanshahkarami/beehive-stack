@@ -24,7 +24,8 @@ channel = connection.channel()
 
 def process_message(ch, method, properties, body):
     print(properties, body, flush=True)
-    channel.basic_ack(delivery_tag=method.delivery_tag)
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
 channel.basic_consume(process_message, queue='raw-data')
+channel.start_consuming()
