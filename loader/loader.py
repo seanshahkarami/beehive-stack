@@ -12,8 +12,21 @@ class SensorData(Model):
 
     node_id = columns.Text(partition_key=True)
     date = columns.Date(partition_key=True)
-    plugin_id = columns.Text(primary_key=True)
     created_at = columns.DateTime(primary_key=True)
+    plugin_id = columns.Text(primary_key=True)
+    topic = columns.Text()
+    data = columns.Blob()
+
+
+class SensorDataLog(Model):
+
+    __options__ = {
+        'default_time_to_live': 60,
+    }
+
+    node_id = columns.Text(partition_key=True)
+    created_at = columns.DateTime(primary_key=True)
+    plugin_id = columns.Text(primary_key=True)
     topic = columns.Text()
     data = columns.Blob()
 
@@ -21,6 +34,7 @@ class SensorData(Model):
 connection.setup(['cassandra'], 'waggle')
 create_keyspace_simple('waggle', replication_factor=3)
 sync_table(SensorData)
+sync_table(SensorDataLog)
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -45,14 +59,25 @@ channel = connection.channel()
 
 
 def process_message(ch, method, properties, body):
+    node_id = 'testnode'
     timestamp = datetime.now()
 
     SensorData.create(
-        node_id='testnode',
+        node_id=node_id,
         date=timestamp.date(),
-        plugin_id='testplugin:0.1',
         created_at=datetime.now(),
-        data=body)
+        plugin_id='testplugin:0.1',
+        topic='test_topic',
+        data=body,
+    )
+
+    SensorDataLog.create(
+        node_id=node_id,
+        created_at=datetime.now(),
+        plugin_id='testplugin:0.1',
+        topic='test_topic',
+        data=body,
+    )
 
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
