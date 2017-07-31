@@ -7,6 +7,10 @@ services:
     configs:
       - source: nginx_config
         target: /etc/nginx/nginx.conf
+    secrets:
+      - cacert
+      - nginx_cert
+      - nginx_key
   rabbitmq:
     image: rabbitmq
     ports:
@@ -34,6 +38,12 @@ services:
     image: beehive-web
     deploy:
       replicas: 3
+  loader:
+    image: beehive-loader
+    secrets:
+      - cacert
+      - loader_cert
+      - loader_key
 configs:
   nginx_config:
     file: ./configs/nginx/nginx.conf
