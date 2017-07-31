@@ -26,5 +26,5 @@ docker swarm init
 Now, you'll want to deploy the beehive stack.
 
 ```sh
-docker stack deploy -c docker-compose.yml beehive
+docker stack deploy -c development.yml beehive
 ```

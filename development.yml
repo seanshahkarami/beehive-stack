@@ -10,7 +10,7 @@ services:
   rabbitmq:
     image: rabbitmq
     ports:
-      - "5672"
+      - "5672:5672"
       - "5671:5671"
       - "15671:15671"
     configs:
@@ -37,7 +37,6 @@ services:
 configs:
   nginx_config:
     file: ./configs/nginx/nginx.conf
-
   rabbitmq_config:
     file: ./configs/rabbitmq/rabbitmq.config
   rabbitmq_definitions:
