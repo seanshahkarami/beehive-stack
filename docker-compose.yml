@@ -1,9 +1,12 @@
-version: "3.2"
+version: "3.3"
 services:
   ngnix:
-    image: beehive-nginx
+    image: nginx
     ports:
       - "8080:80"
+    configs:
+      - source: nginx.conf
+        target: /etc/nginx/nginx.conf
   rabbitmq:
     image: rabbitmq
     ports:
@@ -26,6 +29,9 @@ services:
     image: beehive-web
     deploy:
       replicas: 3
+configs:
+  nginx.conf:
+    file: ./nginx.conf
 secrets:
   cacert:
     external: true
