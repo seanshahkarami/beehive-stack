@@ -8,6 +8,8 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(
         username='tester',
         password='tester',
     ),
+    connection_attempts=5,
+    retry_delay=5.0,
     ssl=True,
     ssl_options={
         'cert_reqs': ssl.CERT_REQUIRED,
