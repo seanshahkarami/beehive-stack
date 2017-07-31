@@ -2,6 +2,7 @@
 from cassandra.cqlengine import columns
 from cassandra.cqlengine import connection
 from cassandra.cqlengine.models import Model
+from datetime import date
 
 
 class SensorData(Model):
@@ -16,9 +17,12 @@ class SensorData(Model):
 
 connection.setup(['localhost'], 'waggle')
 
-q = SensorData.objects()
+q = SensorData.objects(
+    node_id='testnode',
+    date=date(2017, 7, 31),
+)
 
 for r in q:
     print(r.node_id, r.created_at, r.data)
 
-print(q.count())
+print('# count:', q.count())
