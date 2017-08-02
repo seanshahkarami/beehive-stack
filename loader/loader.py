@@ -13,6 +13,7 @@ class SensorData(Model):
     node_id = columns.Text(partition_key=True)
     date = columns.Date(partition_key=True)
     created_at = columns.DateTime(primary_key=True)
+    received_at = columns.DateTime()
     plugin_id = columns.Text(primary_key=True)
     topic = columns.Text()
     data = columns.Blob()
@@ -26,6 +27,7 @@ class SensorDataLog(Model):
 
     node_id = columns.Text(partition_key=True)
     created_at = columns.DateTime(primary_key=True)
+    received_at = columns.DateTime()
     plugin_id = columns.Text(primary_key=True)
     topic = columns.Text()
     data = columns.Blob()
@@ -59,21 +61,24 @@ channel = connection.channel()
 
 
 def process_message(ch, method, properties, body):
-    node_id = 'testnode'
-    timestamp = datetime.now()
+    user_id = properties.user_id
+    received_at = datetime.utcnow()
+    created_at = datetime.utcfromtimestamp(properties.timestamp // 1000)
 
     SensorData.create(
-        node_id=node_id,
-        date=timestamp.date(),
-        created_at=datetime.now(),
+        node_id=user_id,
+        date=received_at.date(),
+        created_at=created_at,
+        received_at=received_at,
         plugin_id='testplugin:0.1',
         topic='test_topic',
         data=body,
     )
 
     SensorDataLog.create(
-        node_id=node_id,
-        created_at=datetime.now(),
+        node_id=user_id,
+        created_at=created_at,
+        received_at=received_at,
         plugin_id='testplugin:0.1',
         topic='test_topic',
         data=body,
