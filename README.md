@@ -1,7 +1,13 @@
 # Beehive Stack
 
-This is an experiment in using the Docker stack features to get a set of
-beehive services running. (See waggle project for more info...)
+This is an experiment in using the Docker stack features to get a set of beehive services running. (See waggle project for more info...)
+
+Warning! Do not this in production right now! This is for development purposes only! Why?
+
+* None of these services are currently configured to have persistent data storage.
+* Cassandra isn't being replicated since only a single instance is run.
+* RabbitMQ has an admin user with password admin.
+* A number of services have ports exposed which should really be only available inside the stack network.
 
 ## Prerequisites
 
