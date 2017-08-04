@@ -22,7 +22,7 @@ q = SensorData.objects()
 for r in q:
     print('node_id:', r.node_id)
     print('created_at:', r.created_at)
-    print('transport_time:', r.received_at - r.created_at)
+    print('transport_time:', (r.received_at - r.created_at).total_seconds(), 'seconds')
     print('data:', r.data)
     print()
 
