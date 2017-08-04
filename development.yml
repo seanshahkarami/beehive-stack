@@ -42,8 +42,6 @@ services:
     image: beehive-loader
     secrets:
       - cacert
-      - loader_cert
-      - loader_key
 configs:
   nginx_config:
     file: ./configs/nginx/nginx.conf
@@ -63,8 +61,4 @@ secrets:
   nginx_cert:
     external: true
   nginx_key:
-    external: true
-  loader_cert:
-    external: true
-  loader_key:
     external: true
