@@ -4,8 +4,8 @@ import ssl
 import time
 from datetime import datetime
 
-username = 'node0050'
-password = 'MiI0OvBkEVofh6pQn-fCfIBioGd5Ly3xOhCZwBoqAds'
+username = 'publisher1'
+password = 'gybBW3UNyaUIn4BTZDtRUl7-zwNco53K8AwsT3bMAfw'
 
 parameters = pika.ConnectionParameters(
     host='localhost',
