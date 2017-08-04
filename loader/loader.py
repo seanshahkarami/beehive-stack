@@ -43,8 +43,8 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(
     host='rabbitmq',
     port=5671,
     credentials=pika.PlainCredentials(
-        username='tester',
-        password='tester',
+        username='loader',
+        password='uvZVGPT8Hknd6s96Xn_J7f5LTuC4Nz0st-iuxJeeGWk',
     ),
     connection_attempts=5,
     retry_delay=5.0,
@@ -52,8 +52,6 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(
     ssl_options={
         'cert_reqs': ssl.CERT_REQUIRED,
         'ca_certs': '/run/secrets/cacert',
-        'certfile': '/run/secrets/loader_cert',
-        'keyfile': '/run/secrets/loader_key',
     }
 ))
 
