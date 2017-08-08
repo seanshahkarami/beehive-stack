@@ -45,5 +45,5 @@ docker stack deploy -c development.yml beehive
 ## Exposed Ports
 
 * Nginx: 8080 (HTTP)
-* RabbitMQ: 5672 (AMQP), 5671 (AMQPS), 15671 (HTTPS / Management)
+* RabbitMQ: 5671 (AMQPS), 15671 (HTTPS / Management)
 * Cassandra: 9042
