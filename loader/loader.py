@@ -33,12 +33,13 @@ class SensorDataLog(Model):
     data = columns.Blob()
 
 
+# setup cassandra connection and models
 connection.setup(['cassandra'], 'waggle')
 create_keyspace_simple('waggle', replication_factor=3)
 sync_table(SensorData)
 sync_table(SensorDataLog)
 
-
+# connect to message broker
 connection = pika.BlockingConnection(pika.ConnectionParameters(
     host='rabbitmq',
     port=5671,
