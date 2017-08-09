@@ -17,9 +17,14 @@ def list_accounts():
             continue
 
 
-def create_user(username, credentials):
+def create_user(username, password, tags=''):
     auth = ('admin', 'admin')
     headers = {'content-type': 'application/json'}
+
+    credentials = {
+        'password': password,
+        'tags': tags,
+    }
 
     r = requests.put(
         url='https://localhost:15671/api/users/{}'.format(username),
@@ -48,6 +53,4 @@ def create_user(username, credentials):
 
 for username, password in list_accounts():
     print(username, password)
-# for username, credentials in load_credentials().items():
-#     print('creating user {}'.format(username))
-#     create_user(username, credentials)
+    create_user(username, password)
