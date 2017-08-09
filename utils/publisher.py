@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
+import waggle.credentials
 import pika
 import ssl
 import time
 from datetime import datetime
 
-username = 'publisher1'
-password = 'gybBW3UNyaUIn4BTZDtRUl7-zwNco53K8AwsT3bMAfw'
+credentials = waggle.credentials.load('publisher1')
+username = credentials['beehive_username']
+password = credentials['beehive_password']
 
 parameters = pika.ConnectionParameters(
     host='localhost',
