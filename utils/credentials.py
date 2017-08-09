@@ -1,11 +1,17 @@
 from configparser import ConfigParser
 import os.path
 
+CREDENTIAL_PATHS = [
+    'credentials',
+    '~/.waggle/credentials',
+    '/etc/waggle/credentials',
+]
+
 
 def load(profile='default'):
     config = ConfigParser()
 
-    for path in ['credentials', '~/.waggle/credentials']:
+    for path in CREDENTIAL_PATHS:
         try:
             config.read(os.path.expanduser(path))
             return dict(config[profile])
