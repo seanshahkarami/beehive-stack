@@ -33,32 +33,6 @@ class SensorDataLog(Model):
     data = columns.Blob()
 
 
-# setup cassandra connection and models
-connection.setup(['cassandra'], 'waggle')
-create_keyspace_simple('waggle', replication_factor=3)
-sync_table(SensorData)
-sync_table(SensorDataLog)
-
-# connect to message broker
-connection = pika.BlockingConnection(pika.ConnectionParameters(
-    host='rabbitmq',
-    port=5671,
-    credentials=pika.PlainCredentials(
-        username='loader',
-        password='uvZVGPT8Hknd6s96Xn_J7f5LTuC4Nz0st-iuxJeeGWk',
-    ),
-    connection_attempts=5,
-    retry_delay=5.0,
-    ssl=True,
-    ssl_options={
-        'cert_reqs': ssl.CERT_REQUIRED,
-        'ca_certs': '/run/secrets/cacert',
-    }
-))
-
-channel = connection.channel()
-
-
 def process_message(ch, method, properties, body):
     user_id = properties.user_id
     received_at = datetime.utcnow()
@@ -86,5 +60,31 @@ def process_message(ch, method, properties, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
-channel.basic_consume(process_message, queue='raw-data')
-channel.start_consuming()
+if __name__ == '__main__':
+    # setup cassandra connection and models
+    connection.setup(['cassandra'], 'waggle')
+    create_keyspace_simple('waggle', replication_factor=3)
+    sync_table(SensorData)
+    sync_table(SensorDataLog)
+
+    # connect to message broker
+    connection = pika.BlockingConnection(pika.ConnectionParameters(
+        host='rabbitmq',
+        port=5671,
+        credentials=pika.PlainCredentials(
+            username='loader',
+            password='uvZVGPT8Hknd6s96Xn_J7f5LTuC4Nz0st-iuxJeeGWk',
+        ),
+        connection_attempts=5,
+        retry_delay=5.0,
+        ssl=True,
+        ssl_options={
+            'cert_reqs': ssl.CERT_REQUIRED,
+            'ca_certs': '/run/secrets/cacert',
+        }
+    ))
+
+    # get channel and start processing messages
+    channel = connection.channel()
+    channel.basic_consume(process_message, queue='raw-data')
+    channel.start_consuming()
