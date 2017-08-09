@@ -2,7 +2,7 @@ from configparser import ConfigParser
 import os.path
 
 CREDENTIAL_PATHS = [
-    'credentials',
+    './credentials',
     '~/.waggle/credentials',
     '/etc/waggle/credentials',
 ]
