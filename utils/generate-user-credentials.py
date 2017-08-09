@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import secrets
-import json
 
 usernames = [
     'loader',
@@ -16,13 +15,10 @@ usernames = [
     'worker5',
 ]
 
-credentials = {}
-
 for username in usernames:
-    credentials[username] = {
-        'password': secrets.token_urlsafe(32),
-        'tags': '',
-    }
+    password = secrets.token_urlsafe(32)
 
-with open('credentials.json', 'w') as f:
-    json.dump(credentials, f)
+    print('[{}]'.format(username))
+    print('beehive_username={}'.format(username))
+    print('beehive_password={}'.format(password))
+    print()

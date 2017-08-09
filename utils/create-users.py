@@ -1,11 +1,20 @@
 #!/usr/bin/env python3
+from configparser import ConfigParser
 import requests
 import json
 
 
-def load_credentials():
-    with open('credentials.json') as f:
-        return json.load(f)
+def list_accounts():
+    config = ConfigParser()
+    config.read('credentials')
+
+    for profile, section in config.items():
+        try:
+            username = section['beehive_username']
+            password = section['beehive_password']
+            yield username, password
+        except KeyError:
+            continue
 
 
 def create_user(username, credentials):
@@ -37,6 +46,8 @@ def create_user(username, credentials):
     )
 
 
-for username, credentials in load_credentials().items():
-    print('creating user {}'.format(username))
-    create_user(username, credentials)
+for username, password in list_accounts():
+    print(username, password)
+# for username, credentials in load_credentials().items():
+#     print('creating user {}'.format(username))
+#     create_user(username, credentials)
