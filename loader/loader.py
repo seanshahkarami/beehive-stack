@@ -38,6 +38,9 @@ def process_message(ch, method, properties, body):
     received_at = datetime.utcnow()
     created_at = datetime.utcfromtimestamp(properties.timestamp // 1000)
 
+    # idempotence of database inserts combined with message acknowledgement
+    # ensures that the database tables will be consistent before continuing
+
     SensorData.create(
         node_id=user_id,
         date=received_at.date(),
