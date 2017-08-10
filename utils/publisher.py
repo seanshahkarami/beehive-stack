@@ -4,10 +4,17 @@ import pika
 import ssl
 import time
 from datetime import datetime
+from argparse import ArgumentParser
 
-credentials = waggle.credentials.load('publisher1')
+parser = ArgumentParser(description='Runs test publisher')
+parser.add_argument('-p', '--profile', default='publisher1', help='credentials profile to use')
+args = parser.parse_args()
+
+credentials = waggle.credentials.load(args.profile)
 username = credentials['beehive_username']
 password = credentials['beehive_password']
+
+print('publishing using profile {}'.format(args.profile))
 
 parameters = pika.ConnectionParameters(
     host='localhost',
