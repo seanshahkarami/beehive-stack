@@ -47,10 +47,10 @@ while True:
         properties=pika.BasicProperties(
             timestamp=utctimestamp,
             user_id=username,
+            type='hellotext',
         ),
         exchange='data-pipeline-in',
         routing_key='hello:1',
-        type='hellotext',
         body=timestr.encode())
 
     print('published', flush=True)
