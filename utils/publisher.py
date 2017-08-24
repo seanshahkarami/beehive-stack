@@ -14,7 +14,7 @@ credentials = waggle.credentials.load(args.profile)
 username = credentials['beehive_username']
 password = credentials['beehive_password']
 
-print('publishing using profile {}'.format(args.profile))
+print('publishing using profile {}'.format(args.profile), flush=True)
 
 parameters = pika.ConnectionParameters(
     host='localhost',
@@ -36,7 +36,7 @@ parameters = pika.ConnectionParameters(
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 
-print('connected')
+print('connected', flush=True)
 
 while True:
     timestr = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
@@ -50,8 +50,9 @@ while True:
         ),
         exchange='data-pipeline-in',
         routing_key='hello:1',
+        type='hellotext',
         body=timestr.encode())
 
-    print('published')
+    print('published', flush=True)
 
     time.sleep(1)

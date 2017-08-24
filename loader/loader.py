@@ -3,9 +3,9 @@ from cassandra.cqlengine import connection
 from cassandra.cqlengine.management import sync_table
 from cassandra.cqlengine.management import create_keyspace_simple
 from cassandra.cqlengine.models import Model
+from datetime import datetime
 import pika
 import ssl
-from datetime import datetime
 
 
 class SensorData(Model):
@@ -37,6 +37,8 @@ def process_message(ch, method, properties, body):
     user_id = properties.user_id
     received_at = datetime.utcnow()
     created_at = datetime.utcfromtimestamp(properties.timestamp // 1000)
+    plugin_id = method.routing_key
+    topic = properties.type
 
     # idempotence of database inserts combined with message acknowledgement
     # ensures that the database tables will be consistent before continuing
@@ -46,8 +48,8 @@ def process_message(ch, method, properties, body):
         date=received_at.date(),
         created_at=created_at,
         received_at=received_at,
-        plugin_id='testplugin:0.1',
-        topic='test_topic',
+        plugin_id=plugin_id,
+        topic=topic,
         data=body,
     )
 
@@ -55,8 +57,8 @@ def process_message(ch, method, properties, body):
         node_id=user_id,
         created_at=created_at,
         received_at=received_at,
-        plugin_id='testplugin:0.1',
-        topic='test_topic',
+        plugin_id=plugin_id,
+        topic=topic,
         data=body,
     )
 
