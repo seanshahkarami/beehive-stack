@@ -36,8 +36,6 @@ services:
       - "9042:9042"
   web:
     image: beehive-web
-    deploy:
-      replicas: 3
   loader:
     image: beehive-loader
     secrets:
