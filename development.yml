@@ -34,8 +34,16 @@ services:
     image: cassandra
     ports:
       - "9042:9042"
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_DATABASE=waggle
+      - MYSQL_USER=waggle
+      - MYSQL_PASSWORD=waggle
   web:
     image: beehive-web
+    ports:
+      - "5000:5000"
   loader:
     image: beehive-loader
     secrets:
