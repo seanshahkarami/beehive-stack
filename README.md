@@ -2,7 +2,7 @@
 
 This is an experiment in using the Docker stack features to get a set of beehive services running. (See waggle project for more info...)
 
-Warning! Do not this in production right now! This is for development purposes only! Why?
+Warning! This should not be used in production right now for these reasons:
 
 * None of these services are currently configured to have persistent data storage.
 * Cassandra isn't being replicated since only a single instance is run.
